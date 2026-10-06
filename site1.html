@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de IMC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    input {
+      width: 95%; /*pq com as setinhas do campo tipo number, o campo fica maior */
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+      width: 100%;
+    }
+    #resultado {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2 align="center">Calculadora de IMC</h2>
+
+  <form>
+    <label>Peso (kg):</label><br>
+    <input type="number" id="peso" placeholder="Ex: 70">
+    <br><br>  
+
+    <label>Altura (m):</label><br>
+    <input type="number" id="altura" placeholder="Ex: 1.75">
+    <br><br>
+
+    <input type="button" value="Calcular IMC" onclick="calcularIMC()">    
+  </form>
+
+  <br><br>
+  <div id="resultado"></div>
+
+  <script>
+    function calcularIMC() {
+      const peso = document.getElementById("peso").value;
+      const altura = document.getElementById("altura").value;
+
+      const resultado = document.getElementById("resultado");
+
+      if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+        resultado.textContent = "Por favor, insira peso e altura válidos.";
+        resultado.style.backgroundColor = "#f0f0f0";
+        resultado.style.color = "black";
+        return;
+      }
+
+      var imc = peso / (altura * altura);
+      imc = imc.toFixed(1);
+
+      let mensagem = "";
+      let cor = "";
+
+      if (imc < 18.5) {
+        mensagem = "Abaixo do peso";
+        cor = "#ffc107"; // amarelo
+      } else if (imc <= 24.9) {
+        mensagem = "Peso normal";
+        cor = "#28a745"; // verde
+      } else if (imc <= 29.9) {
+        mensagem = "Sobrepeso";
+        cor = "#fd7e14"; // laranja
+      } else if (imc <= 34.9) {
+        mensagem = "Obesidade grau 1";
+        cor = "#dc3545"; // vermelho claro
+      } else if (imc <= 39.9) {
+        mensagem = "Obesidade grau 2";
+        cor = "#c82333"; // vermelho médio
+      } else {
+        mensagem = "Obesidade grau 3 (mórbida)";
+        cor = "#900c3f"; // vermelho escuro
+      }
+
+      //resultado.textContent = "IMC: " + imc + "—" + mensagem;
+      
+      resultado.textContent = `IMC: ${imc} — ${mensagem}`;
+      resultado.style.backgroundColor = cor;
+      resultado.style.color = "white";
+    }
+  </script>
+
+</body>
+</html>
